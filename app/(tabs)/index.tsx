@@ -35,17 +35,17 @@ export default function HomeScreen() {
         {/* Categories Section */}
         <View className="mt-8 px-5">
           <View className="flex-row justify-between items-center mb-5">
-            <Text className="text-xl font-black text-slate-900 tracking-tight">Categories</Text>
+            <Text className="text-xl font-semibold text-slate-900 tracking-tight">Categories</Text>
             <TouchableOpacity onPress={() => router.push('/categories')}>
                 <Text className="text-blue-600 font-bold">See All</Text>
             </TouchableOpacity>
           </View>
           
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row pb-2">
             {['Phones', 'Laptops', 'Watches', 'Audio', 'Gaming'].map((cat, idx) => (
               <TouchableOpacity 
                 key={cat} 
-                className={`items-center mr-4 px-6 py-3.5 rounded-2xl border ${idx === 0 ? 'bg-blue-600 border-blue-600 shadow-lg shadow-blue-600/30' : 'bg-white border-slate-100 shadow-sm'}`}
+                className={`items-center mr-4 px-6 py-3.5 rounded-lg border ${idx === 0 ? 'bg-blue-600 border-blue-600 shadow-lg shadow-blue-600/30' : 'bg-white border-slate-100 shadow-sm'}`}
               >
                 <Text className={`font-black tracking-tight ${idx === 0 ? 'text-white' : 'text-slate-600'}`}>{cat}</Text>
               </TouchableOpacity>

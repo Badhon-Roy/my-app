@@ -26,6 +26,16 @@ const banners = [
     accentColor: '#7C3AED',
     badge: 'NEW',
   },
+ {
+  id: '3',
+  title: 'iPad Pro 2026',
+  subtitle: 'Latest Model',
+  description: 'Powerful, sleek, and versatile for all your creative needs.',
+  image: require('@/assets/images/iphone-banner.png'),
+  bgColor: '#1E293B',
+  accentColor: '#14B8A6',
+  badge: 'HOT',
+},
 ];
 
 export const BannerCarousel = () => {
@@ -63,7 +73,7 @@ export const BannerCarousel = () => {
     >
       <View 
         style={{ backgroundColor: item.bgColor }}
-        className="relative rounded-[40px] h-[220px] overflow-hidden p-7 shadow-2xl shadow-slate-900/50"
+        className="relative rounded-[10px] h-[220px] overflow-hidden p-7"
       >
         {/* Decorative Circle */}
         <View 
@@ -77,10 +87,10 @@ export const BannerCarousel = () => {
             <Text className="text-white/60 text-[10px] font-black tracking-[3px] uppercase mb-1">
               {item.subtitle}
             </Text>
-            <Text className="text-white text-3xl font-black leading-[36px] mb-2 tracking-tight">
+            <Text className="text-white text-3xl font-black leading-[36px] mb-2 tracking-tight w-[90%]">
               {item.title}
             </Text>
-            <Text className="text-white/80 text-sm font-bold mb-6">
+            <Text className="text-white/80 text-sm font-bold mb-6 line-clamp-2 w-[80%]">
               {item.description}
             </Text>
             
@@ -96,7 +106,7 @@ export const BannerCarousel = () => {
           <View className="flex-1 items-end justify-center relative">
             <Image
               source={item.image}
-              className="w-40 h-40"
+              className="w-40 h-40 rounded"
               contentFit="contain"
             />
             {item.badge && (
