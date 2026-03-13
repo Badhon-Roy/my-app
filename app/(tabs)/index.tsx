@@ -1,98 +1,82 @@
 import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { IconSymbol } from '@/components/ui/icon-symbol';
+import { useRouter } from 'expo-router';
+import { BannerCarousel } from '@/components/BannerCarousel';
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const router = useRouter();
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  return (
+    <SafeAreaView className="flex-1 bg-slate-50">
+      {/* Header / Search Bar */}
+      <View className="px-5 pt-3 pb-4 flex-row items-center gap-3">
+        <View className="flex-1 flex-row items-center bg-white border border-slate-200 rounded-2xl px-4 py-3 shadow-sm shadow-slate-200">
+          <IconSymbol name="magnifyingglass" size={18} color="#64748B" />
+          <TextInput 
+            placeholder="Search products..." 
+            className="flex-1 ml-2 text-slate-700 font-medium" 
+            placeholderTextColor="#94A3B8"
+          />
+        </View>
+        <TouchableOpacity className="bg-white border border-slate-200 p-3 rounded-2xl shadow-sm shadow-slate-200">
+          <IconSymbol name="bell" size={20} color="#1E293B" />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 100 }}>
+        
+        {/* Modern Auto-Slide Banner */}
+        <View className="px-5">
+          <BannerCarousel />
+        </View>
+
+        {/* Categories Section */}
+        <View className="mt-8 px-5">
+          <View className="flex-row justify-between items-center mb-5">
+            <Text className="text-xl font-black text-slate-900 tracking-tight">Categories</Text>
+            <TouchableOpacity onPress={() => router.push('/categories')}>
+                <Text className="text-blue-600 font-bold">See All</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} className="flex-row">
+            {['Phones', 'Laptops', 'Watches', 'Audio', 'Gaming'].map((cat, idx) => (
+              <TouchableOpacity 
+                key={cat} 
+                className={`items-center mr-4 px-6 py-3.5 rounded-2xl border ${idx === 0 ? 'bg-blue-600 border-blue-600 shadow-lg shadow-blue-600/30' : 'bg-white border-slate-100 shadow-sm'}`}
+              >
+                <Text className={`font-black tracking-tight ${idx === 0 ? 'text-white' : 'text-slate-600'}`}>{cat}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* Featured Products */}
+        <View className="mt-9 px-5">
+          <Text className="text-xl font-black text-slate-900 tracking-tight mb-5">Featured Today</Text>
+          <View className="flex-row flex-wrap justify-between -mx-2">
+            {[
+              { id: 1, name: 'AirPods Pro 2', price: '$249', img: '🎧' },
+              { id: 2, name: 'Apple Watch Ultra', price: '$799', img: '⌚' },
+              { id: 3, name: 'MacBook Air M3', price: '$1299', img: '💻' },
+              { id: 4, name: 'iPad Pro', price: '$999', img: '📱' },
+            ].map((prod) => (
+              <View key={prod.id} className="w-1/2 px-2 mb-4">
+                <View className="bg-white p-5 rounded-[32px] items-center border border-slate-50 shadow-sm shadow-slate-200">
+                  <View className="w-24 h-24 bg-slate-50 rounded-3xl items-center justify-center mb-4">
+                    <Text className="text-4xl">{prod.img}</Text>
+                  </View>
+                  <Text className="text-slate-900 font-black text-[13px] text-center mb-1" numberOfLines={1}>{prod.name}</Text>
+                  <Text className="text-blue-600 font-black text-base">{prod.price}</Text>
+                </View>
+              </View>
+            ))}
+          </View>
+        </View>
+
+      </ScrollView>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
