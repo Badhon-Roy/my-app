@@ -32,6 +32,18 @@ const MAPPING = {
   'mappin.and.ellipse': 'location-on',
   'info.circle.fill': 'info',
   'phone.fill': 'phone',
+  'heart.fill': 'favorite',
+  'heart': 'favorite-border',
+  'cart.fill': 'shopping-cart',
+  'tag': 'local-offer',
+  'tag.fill': 'local-offer',
+  'truck.fill': 'local-shipping',
+  'gift.fill': 'card-giftcard',
+  'doc.on.doc': 'content-copy',
+  'arrow.triangle.2.circlepath': 'autorenew',
+  'star.fill': 'star',
+  'star': 'star-border',
+  'person': 'person',
 } as IconMapping;
 
 /**
